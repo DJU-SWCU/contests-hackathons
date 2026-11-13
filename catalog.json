@@ -5,23 +5,25 @@
     {
       "id": "2026-ai-oss-hackathon",
       "year": 2026,
-      "title": "2026 AI·OSS 해커톤 경진대회",
-      "status": "개최 예정",
+      "title": "2026 DJU OSS·AI 해커톤 경진대회",
+      "status": "참가 안내",
       "summary": "AI와 오픈소스를 활용해 문제를 해결하고, 프로젝트 결과물을 GitHub 공개 저장소로 공유하는 해커톤입니다.",
-      "date": "2026.11.27.(금) ~ 11.28.(토) · 무박 2일 (예정)",
-      "venue": null,
-      "applicationPeriod": "2026.11.02.(월) ~ 11.19.(목) (예정)",
-      "applicationMethod": null,
+      "date": "2026.11.27.(금) ~ 11.28.(토) · 무박 2일",
+      "venue": "30주년기념관 교양관 5층 하나컨벤션",
+      "applicationPeriod": "2026.11.22.(일) 24:00까지",
+      "applicationMethod": "신청서 v3를 작성해 swdju@dju.kr로 제출",
       "noticeUrl": null,
       "applicationFile": "application-2026.hwpx",
       "tracks": [
-        "(비SW) AI를 활용한 융합형 문제해결",
-        "AI 기반 소프트웨어엔지니어링 (AI-Driven SE)",
-        "기타"
+        "전공 연계형 AI·SW 융합 문제해결",
+        "문제해결 및 공공 데이터 연계",
+        "개발자 생산성 및 오픈소스 기여 도구"
       ],
-      "submissionNote": "계획서, 최종 결과보고서(프로토타입 시연 포함), 발표 자료를 GitHub 공개 저장소에서 확인할 수 있어야 합니다. 타인의 저작물과 오픈소스 활용 시 출처와 라이선스를 준수해 주세요.",
-      "scheduleNote": "운영계획(안) 기준의 예정 일정입니다. 장소와 신청 방법은 추후 안내합니다. 신청서 내려받기는 접수 완료를 의미하지 않습니다.",
-      "audience": "대전대학교 재학생 · 2학기 Semi-CoAct 교과목 수강생 참여 시 우대"
+      "submissionNote": "팀별 GitHub 공개 저장소에 계획서, 코드, 최종 결과보고서, 발표 자료와 프로토타입 시연 링크를 정리해 주세요.",
+      "scheduleNote": "팀장과 팀원이 신청서에 서명한 뒤 팀 대표가 작성본을 이메일에 첨부해 제출합니다. 문의 042-280-4624",
+      "audience": "대전대학교 전체 재학생 · 팀당 3~5명(팀장 포함)",
+      "applicationEmail": "swdju@dju.kr",
+      "posterFile": "poster-2026.png"
     }
   ],
   "projects": []

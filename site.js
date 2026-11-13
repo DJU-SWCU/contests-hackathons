@@ -18,11 +18,22 @@
     if(e.audience)main.append(el('p',e.audience,'event-note'));
     top.append(year,main);card.append(top);
     const dl=el('dl',undefined,'schedule');
-    [['행사 일시',e.date],['장소',e.venue],['접수 기간',e.applicationPeriod],['신청 방법',e.applicationMethod]].forEach(([label,value])=>{const d=el('div');d.append(el('dt',label),el('dd',value||'추후 안내'));dl.append(d);});card.append(dl);
+    [['행사 일시',e.date],['장소',e.venue],['접수 마감',e.applicationPeriod],['신청 방법',e.applicationMethod]].forEach(([label,value])=>{const d=el('div');d.append(el('dt',label),el('dd',value||'추후 안내'));dl.append(d);});card.append(dl);
     const bottom=el('div',undefined,'event-bottom'),tracks=el('div',undefined,'tracks');
     (e.tracks||[]).forEach(t=>tracks.append(el('span',t,'track')));bottom.append(el('h4','참가 분야'),tracks);
     const actions=el('div',undefined,'event-links');
-    const form=link('참가신청서 내려받기 ↓',e.applicationFile,'small-button',true);if(form){form.download='';actions.append(form);}
+    const form = link(e.applicationEmail ? '참가신청서 v3 내려받기' : '참가신청서 내려받기', e.applicationFile, 'small-button', true);
+    if (form) {
+      form.download = e.id === '2026-ai-oss-hackathon' ? '2026_DJU_OSS-AI_해커톤_참가신청서_v3.hwpx' : '';
+      actions.append(form);
+    }
+    if (e.applicationEmail && /^[^@\s]+@[^@\s]+$/.test(e.applicationEmail)) {
+      const email = el('a', '신청 이메일 열기 ↗', 'text-link');
+      email.href = `mailto:${e.applicationEmail}?subject=${encodeURIComponent(`[${e.title}] 참가신청`)}`;
+      actions.append(email);
+    }
+    const poster = link('행사 포스터 보기 ↗', e.posterFile, 'text-link', true);
+    if (poster) actions.append(poster);
     const notice=link('공식 공지 보기 ↗',e.noticeUrl,'text-link');if(notice)actions.append(notice);
     const works=el('a','이 행사 참가 작품 보기 ↓','text-link');works.href='#projects';works.addEventListener('click',()=>{$('event').value=e.id;renderProjects();syncUrl();});actions.append(works);
     bottom.append(actions,el('p',e.submissionNote,'event-note'),el('p',e.scheduleNote,'event-note'));card.append(bottom);return card;
@@ -33,7 +44,7 @@
     if(p.technologies?.length)c.append(el('p',p.technologies.join(' · '),'project-tech'));
     if(p.award)c.append(el('p',p.award,'project-tech'));
     const links=el('div',undefined,'project-links');
-    [['소스코드 ↗',p.repositoryUrl],['발표 자료 ↗',p.presentationUrl],['시연 보기 ↗',p.demoUrl]].forEach(([text,url])=>{const a=link(text,url);if(a)links.append(a);});c.append(links);return c;
+    [['소스코드 ↗',p.repositoryUrl],['최종 보고서 ↗',p.reportUrl],['발표 자료 ↗',p.presentationUrl],['시연 보기 ↗',p.demoUrl]].forEach(([text,url])=>{const a=link(text,url);if(a)links.append(a);});c.append(links);return c;
   }
   function syncUrl(){const url=new URL(location.href);url.searchParams.set('year',$('year').value);if($('event').value)url.searchParams.set('event',$('event').value);else url.searchParams.delete('event');history.replaceState(null,'',url);}
   function renderProjects(){
@@ -64,7 +75,16 @@
       const featured=data.events.find(e=>e.id===data.featuredEventId)||data.events[0];
       $('featured-title').textContent=featured.title;$('featured-status').textContent=`${featured.year} · ${featured.status}`;
       $('featured-summary').textContent=featured.summary;
-      $('featured-note').textContent=featured.date?`행사: ${featured.date} · 모집: ${featured.applicationPeriod||'추후 안내'}`:'행사 일정과 접수 방법은 추후 안내합니다.';
+      $('featured-note').textContent=featured.date?`행사: ${featured.date} · 접수: ${featured.applicationPeriod||'추후 안내'}`:'행사 일정과 접수 방법은 추후 안내합니다.';
+      const featuredDownload = $('featured-download');
+      const applicationUrl = safeUrl(featured.applicationFile, true);
+      featuredDownload.hidden = !applicationUrl;
+      if (applicationUrl) {
+        featuredDownload.href = applicationUrl;
+        const isCurrentForm = featured.id === '2026-ai-oss-hackathon';
+        featuredDownload.textContent = isCurrentForm ? '참가신청서 v3 내려받기' : '참가신청서 내려받기';
+        featuredDownload.download = isCurrentForm ? '2026_DJU_OSS-AI_해커톤_참가신청서_v3.hwpx' : '';
+      }
       $('featured-link').href='#event-'+featured.id;
       $('featured-link').addEventListener('click',()=>{if(Number($('year').value)!==featured.year){$('year').value=String(featured.year);renderYear();syncUrl();}});
       renderYear(params.get('event')||'');
